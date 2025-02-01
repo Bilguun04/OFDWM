@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 import pandas as pd
 from models import FirefighterModel
 from config import Config
@@ -9,6 +9,10 @@ app_routes = Blueprint("app_routes", __name__)
 def allowed_file(filename):
     """Check if the file is a CSV."""
     return "." in filename and filename.rsplit(".", 1)[1].lower() in Config.ALLOWED_EXTENSIONS
+
+@app_routes.route("/", methods=["GET"])
+def index():
+    return render_template("index.html")
 
 @app_routes.route("/upload", methods=["POST"])
 def upload_csv():

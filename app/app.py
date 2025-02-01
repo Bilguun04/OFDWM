@@ -1,11 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template
 from config import Config
 from routes import app_routes
 from flask_pymongo import PyMongo
 
 app = Flask(__name__)
-app.config.from_object(Config)  # Load configurations
-mongo = PyMongo(app)  # Connect to MongoDB
+app.config.from_object(Config)
+mongo = PyMongo(app)
 
 # Register routes (URLs)
 app.register_blueprint(app_routes)
