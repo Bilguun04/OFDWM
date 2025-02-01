@@ -5,22 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}My Flask App{% endblock %}</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="icon" href="{{ url_for('static', filename='logo.svg') }}" type="image/x-icon">
 </head>
-<body class="bg-orange-100">
-    <header>
-        <h1>OFDWM</h1>
+<body class="gap-8">
+    <header class="grid grid-cols-12 fixed bg-white w-full">
+        <img src="{{ url_for('static', filename='logo.svg') }}" alt="Logo" class="col-span-1 ml-8 h-16 w-16 hidden md:block">
+        <div class="hidden sm:flex sm:flex-row gap-8 justify-center items-center col-span-12 md:col-span-8 mt-4 md:mt-0">
+            <a class="text-orange-500 text-lg" href="{{ url_for('app_routes.index') }}">Home</a>
+            <a class="text-orange-500 text-lg" href="#about">About us</a>
+            <a class="text-orange-500 text-lg" href="#overview">Program Overview</a>
+            <a class="text-orange-500 text-lg" href="#contact">Contact</a>
+        </div>
+        <div class="flex flex-row gap-8 justify-center items-center hidden md:flex col-span-3">
+            <button class="text-orange-500">Login</button>
+            <button class="bg-orange-500 text-white px-4 rounded">Register</button>
+        </div>
     </header>
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('index') }}">Home</a></li>
-            <li><a href="{{ url_for('about') }}">About</a></li>
-        </ul>
-    </nav>
-    <main>
+    <main class="bg-linear-to-b from-orange-100 via-orange-300 via-orange-200 to-orange-100">
         {% block content %}{% endblock %}
     </main>
     <footer>
-        <p>&copy; 2025 My Flask App</p>
+        <div>
+
+        </div>
     </footer>
 </body>
 </html>

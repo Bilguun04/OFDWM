@@ -3,6 +3,36 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <h2>Home Page</h2>
-    <p>Welcome to the home page of my Flask app!</p>
+<div class="flex justify-center items-center h-screen">
+    <div class="w-3/4 flex flex-col gap-4 text-center">
+        <h2 class="text-4xl font-semibold">We are optimizing Firefighter Deployment for Wildlife Management</h2>
+        <button class="bg-orange-500 text-white px-4 py-2 rounded-xl">Get Started</button>
+    </div>
+</div>
+<div class="flex flex-col gap-64">
+    <div class="flex justify-center items-center h-1/2" id="about">
+        <div class="w-3/4 flex flex-col gap-4 text-center">
+            <h2 class="text-3xl font-semibold">About us</h2>
+            <p>
+                At OFDWM, we are committed to leveraging cutting-edge technology 
+                to improve wildfire response and firefighter deployment. Our mission 
+                is to develop an AI-powered system that enhances decision-making in 
+                emergency situations, ensuring that resources are allocated efficiently 
+                and lives are protected.
+            </p>
+        </div>
+    </div>
+    <div class="flex justify-center items-center h-screen" id="overview">
+        <div class="w-3/4 flex flex-col gap-4 text-center">
+            <h2 class="text-3xl font-semibold">Program Overview</h2>
+            <p>
+                Using advanced machine learning models, real-time data processing, and an 
+                intuitive interface, we provide first responders with actionable insights 
+                to optimize firefighter availability, scheduling, and deployment. Our team 
+                is dedicated to building a solution that not only improves response times 
+                but also helps mitigate wildfire risks for communities worldwide.
+            </p>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -19,24 +19,14 @@ def upload_csv():
     """Handles CSV file uploads."""
     if "file" not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
-    
+
     file = request.files["file"]
-    
+
     if file.filename == "" or not allowed_file(file.filename):
         return jsonify({"error": "Invalid file format"}), 400
-    
+
     filepath = os.path.join(Config.UPLOAD_FOLDER, file.filename)
     file.save(filepath)
 
     # Process CSV file
     data = pd.read_csv(filepath)
-    for _, row in data.iterrows():
-        FirefighterModel.insert_data(row.to_dict())
-
-    return jsonify({"message": "File uploaded and data stored successfully"}), 200
-
-@app_routes.route("/firefighters", methods=["GET"])
-def get_firefighters():
-    """Fetch all firefighter data."""
-    data = FirefighterModel.get_all_data()
-    return jsonify(data), 200
