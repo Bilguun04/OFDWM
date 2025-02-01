@@ -5,7 +5,7 @@ Optimizing Firefighter Deployment for Wildfire Management
 
 1. First, activate the virtual environment:
     ```sh
-    python -m venv venv
+    python3 -m venv venv
     ```
 2. Activate the virtual environment:
     ```sh
@@ -14,4 +14,8 @@ Optimizing Firefighter Deployment for Wildfire Management
 3. Install the required packages:
     ```sh
     pip install -r requirements.txt
+    ```
+4. Run the project
+    ```sh
+    python3 app/app.py
     ```
