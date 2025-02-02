@@ -3,7 +3,7 @@ import pandas as pd
 from models import FirefighterModel
 from config import Config
 import os
-from monte_carlo import main
+from monte_carlo import parallel_monte_carlo as main
 
 app_routes = Blueprint("app_routes", __name__)
 

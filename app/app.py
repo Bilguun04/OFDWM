@@ -1,14 +1,21 @@
-import os
-import pandas as pd
 import logging
+import os
+from routes import app_routes
+
+import pandas as pd
 from flask import Flask, render_template, request, send_file, jsonify
 from werkzeug.utils import secure_filename
+
+import routes
 from monte_carlo import parallel_monte_carlo  # Monte Carlo logic
 
 # Initialize Flask app
+
 app = Flask(__name__)
 app.config["UPLOAD_FOLDER"] = "uploads"
 app.config["ALLOWED_EXTENSIONS"] = {"csv"}
+
+app.register_blueprint(app_routes)
 
 # Ensure upload directory exists
 os.makedirs(app.config["UPLOAD_FOLDER"], exist_ok=True)
