@@ -5,11 +5,18 @@
 {% block content %}
 <div class="flex justify-center items-center h-screen flex-col gap-8">
     <div class="w-3/4 text-center">
-        <h2 class="text-4xl font-semibold">Upload CSV File</h2>
-        <p class="text-lg mt-4">Please upload your CSV file for processing. Ensure the file is in the correct format.</p>
+        <h2 class="text-4xl font-semibold">Upload CSV Files</h2>
+        <p class="text-lg mt-4">Please upload your CSV files for processing. Ensure the files are in the correct format.</p>
     </div>
-    <form action="/upload" method="post" enctype="multipart/form-data" class="w-3/4 flex flex-col gap-4 items-center">
-        <input type="file" name="file" accept=".csv" class="border border-white p-2 rounded">
+    <form action="/upload" method="post" enctype="multipart/form-data" class="w-3/4 flex flex-row flex-wrap items-center gap-4">
+        <div class="w-full flex flex-col gap-4 inline-border border-4 border-blue-500 p-8 rounded-xl bg-white">
+            <label for="team-file" class="text-lg font-semibold">Upload Team CSV File:</label>
+            <input type="file" name="team_file" id="team-file" accept=".csv" class="border border-gray-300 p-2 rounded">
+        </div>
+        <div class="w-full flex flex-col gap-4 inline-border border-4 border-blue-500 p-8 rounded-xl bg-white">
+            <label for="incidents-file" class="text-lg font-semibold">Upload Incidents CSV File:</label>
+            <input type="file" name="incidents_file" id="incidents-file" accept=".csv" class="border border-gray-300 p-2 rounded">
+        </div>
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-xl">Upload</button>
     </form>
 </div>
