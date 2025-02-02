@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Upload CSV{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center h-screen flex-col gap-8">
+    <div class="w-3/4 text-center">
+        <h2 class="text-4xl font-semibold">Upload CSV File</h2>
+        <p class="text-lg mt-4">Please upload your CSV file for processing. Ensure the file is in the correct format.</p>
+    </div>
+    <form action="/upload" method="post" enctype="multipart/form-data" class="w-3/4 flex flex-col gap-4 items-center">
+        <input type="file" name="file" accept=".csv" class="border border-white p-2 rounded">
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-xl">Upload</button>
+    </form>
+</div>
+{% endblock %}

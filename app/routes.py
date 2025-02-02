@@ -3,6 +3,7 @@ import pandas as pd
 from models import FirefighterModel
 from config import Config
 import os
+from logic import main
 
 app_routes = Blueprint("app_routes", __name__)
 
@@ -14,19 +15,23 @@ def allowed_file(filename):
 def index():
     return render_template("index.html")
 
-@app_routes.route("/upload", methods=["POST"])
-def upload_csv():
-    """Handles CSV file uploads."""
-    if "file" not in request.files:
-        return jsonify({"error": "No file uploaded"}), 400
+# @app_routes.route("/upload", methods=["POST"])
+# def upload_csv():
+#     """Handles CSV file uploads."""
+#     if "file" not in request.files:
+#         return jsonify({"error": "No file uploaded"}), 400
 
-    file = request.files["file"]
+#     file = request.files["file"]
 
-    if file.filename == "" or not allowed_file(file.filename):
-        return jsonify({"error": "Invalid file format"}), 400
+#     if file.filename == "" or not allowed_file(file.filename):
+#         return jsonify({"error": "Invalid file format"}), 400
 
-    filepath = os.path.join(Config.UPLOAD_FOLDER, file.filename)
-    file.save(filepath)
+#     filepath = os.path.join(Config.UPLOAD_FOLDER, file.filename)
+#     file.save(filepath)
 
-    # Process CSV file
-    data = pd.read_csv(filepath)
+#     # Process CSV file
+#     data = pd.read_csv(filepath)
+
+@app_routes.route("/upload")
+def upload():
+    return render_template("upload.html")
