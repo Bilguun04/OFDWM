@@ -4,29 +4,29 @@ import copy
 import math
 
 
-def generate_initial_schedule(teams, incidents):
+def generate_initial_schedule(teams_new, incidents_new):
     # Sort incidents by severity (high to low)
-    incidents = incidents.sort_values(by="severity", ascending=False).reset_index(drop=True)
+    incidents_new = incidents_new.sort_values(by="severity", ascending=False).reset_index(drop=True)
 
     # Sort teams: First by variety of crime types, then by power
-    teams['crime_type_count'] = teams['crime_types'].apply(lambda x: len(x.split(';')))
-    teams = teams.sort_values(by=['crime_type_count', 'power']).reset_index(drop=True)
-    teams = teams.drop(columns=['crime_type_count'])  # Remove helper column
+    teams_new['crime_type_count'] = teams_new['crime_types'].apply(lambda x: len(x.split(';')))
+    teams_new = teams_new.sort_values(by=['crime_type_count', 'power']).reset_index(drop=True)
+    teams_new = teams_new.drop(columns=['crime_type_count'])  # Remove helper column
 
     initial_schedule = pd.DataFrame(columns=["incident", "assigned_team"])
 
     # Assign teams to incidents
-    for i, incident in incidents.iterrows():
+    for i, incident in incidents_new.iterrows():
         if incident['status'] == 'open':
-            for j, team in teams.iterrows():
+            for j, team in teams_new.iterrows():
                 if (incident['crime_type'] in team['crime_types']
                         and team['units_available'] * team['power'] >= incident['severity']):
 
                     # Update available units
-                    teams.at[j, 'units_available'] = team['units_available'] - math.ceil(incident['severity'] / team['power'])
+                    teams_new.at[j, 'units_available'] = team['units_available'] - math.ceil(incident['severity'] / team['power'])
 
                     # Update incident status
-                    incidents.at[i, 'status'] = "in_progress"
+                    incidents_new.at[i, 'status'] = "in_progress"
 
                     # Update schedule
                     initial_schedule = pd.concat([initial_schedule, pd.DataFrame({
@@ -34,50 +34,47 @@ def generate_initial_schedule(teams, incidents):
                         "assigned_team": [team['team_name']]})], ignore_index=True)
                     break  # Move to the next incident after assignment
 
-    return initial_schedule
+    return initial_schedule, teams_new, incidents_new # should return incidents and teams with updated status and units_available
 
 
+def evaluate_schedule(schedule, incidents, teams):
+
+    penalty = 0
+
+    # missed incidents
+    for i, incident in incidents.iterrows():
+        if incident['status'] == 'open':
+            penalty += 200 * incident['severity']
+
+    # empty teams
+    penalty += teams[teams["units_available"] == 0].shape[0] * 400
+
+    # overused teams
+    for i, team in teams.iterrows():
+        if team['units_available'] < team['total_units']/2:
+            penalty += 10 * (100 - team['units_available'] / team['total_units'])
+
+    # Overassigned resources
+    for i, assignment in schedule.iterrows():
+
+        incident_id = assignment["incident"]
+        assigned_team = assignment["assigned_team"]
+        incident = incidents.loc[incidents["location"] == incident_id].iloc[0]
+        severity = incident["severity"]
+        team = teams.loc[teams["team_name"] == assigned_team].iloc[0]
+        team_power = team["power"]
+
+        # Check if the assigned team has more power than required (overqualified team)
+        if team_power > severity:
+            penalty += 200  # Penalty for using an overqualified team
+
+        # Check if the assigned team's available resources exceed the needed severity (excess resource allocation)
+        if team_power * team["units_available"] > severity:
+            penalty += 200  # Penalty for assigning excessive resources
 
 
-def evaluate_solution(teams, incidents, assignment):
-    """
-    Compute the total penalty of an assignment.
+    return penalty
 
-    Rules:
-      - If incident is assigned to no team (None) or a team that doesn't cover the crime:
-        large penalty (9999)
-      - Otherwise, penalty = max(0, severity - team_power).
-
-    :param teams: list of dicts
-    :param incidents: list of dicts
-    :param assignment: dict {incident_id: team_name}
-    :return: float (total penalty)
-    """
-    # Create lookup by team_name
-    team_lookup = {t["team_name"]: t for t in teams}
-
-    total_penalty = 0.0
-    for inc in incidents:
-        inc_id = inc["incident_id"]
-        assigned_team = assignment.get(inc_id, None)
-
-        if not assigned_team:
-            # No team -> large penalty
-            total_penalty += 9999
-            continue
-
-        team = team_lookup[assigned_team]
-        # Check coverage
-        if inc["crime_type"] not in team["crime_types"]:
-            total_penalty += 9999
-        else:
-            # penalty = max(0, severity - power)
-            sev = inc["severity"]
-            pwr = team["power"]
-            penalty = max(0, sev - pwr)
-            total_penalty += penalty
-
-    return total_penalty
 
 
 def refine_solution(teams, incidents, assignment, max_iterations=1000):
@@ -92,7 +89,7 @@ def refine_solution(teams, incidents, assignment, max_iterations=1000):
     :return: improved assignment (dict)
     """
     best_assignment = copy.deepcopy(assignment)
-    best_penalty = evaluate_solution(teams, incidents, best_assignment)
+    best_penalty = evaluate_schedule(best_assignment)
 
     # Precompute which teams can handle each crime type
     crime_to_teams = {}
@@ -135,7 +132,7 @@ def refine_solution(teams, incidents, assignment, max_iterations=1000):
         new_assignment = copy.deepcopy(best_assignment)
         new_assignment[inc_id] = new_team
 
-        new_penalty = evaluate_solution(teams, incidents, new_assignment)
+        new_penalty = evaluate_schedule(teams, incidents, new_assignment)
 
         if new_penalty < best_penalty:
             # accept improvement
@@ -163,7 +160,7 @@ def monte_carlo_solution(teams, incidents, num_iterations=50, refine_iters=200):
     for _ in range(num_iterations):
         init_sol = generate_initial_schedule(teams, incidents)
         refined_sol = refine_solution(teams, incidents, init_sol, max_iterations=refine_iters)
-        penalty = evaluate_solution(teams, incidents, refined_sol)
+        penalty = evaluate_schedule(teams, incidents, refined_sol)
 
         if penalty < best_penalty:
             best_penalty = penalty
