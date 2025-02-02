@@ -1,7 +1,5 @@
 
-# **AI - Patrol Dispatch**
-
-# **OFDWM - AI-Enhanced Incident Response Platform**  
+# **AI - Patrol Dispatch - AI-Enhanced Incident Response Platform**  
 
 OFDWM is a real-time incident response platform designed to optimize police unit deployment. It processes live incident reports, prioritizes response based on severity, and ensures efficient resource allocation to enhance public safety.  
 
