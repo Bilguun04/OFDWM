@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Flask App{% endblock %}</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="icon" href="{{ url_for('static', filename='logo.svg') }}" type="image/x-icon">
+</head>
+<body class="gap-8">
+    <header class="grid grid-cols-12 fixed bg-white w-full">
+        <img src="{{ url_for('static', filename='logo.svg') }}" alt="Logo" class="col-span-1 ml-8 h-12 w-12 hidden md:block">
+        <div class="hidden sm:flex sm:flex-row gap-8 justify-center items-center col-span-12 md:col-span-8 mt-4 md:mt-0">
+            <a class="text-blue-500 text-lg hover:underline" href="/">Home</a>
+            <a class="text-blue-500 text-lg hover:underline" href="/#overview">Program Overview</a>
+            <a class="text-blue-500 text-lg hover:underline" href="/#about">About us</a>
+            <a class="text-blue-500 text-lg hover:underline" href="/#contact">Contact</a>
+        </div>
+        <div class="flex flex-row gap-8 justify-center items-center hidden md:flex col-span-3">
+            <button class="text-blue-500">Login</button>
+            <button class="bg-blue-500 text-white px-4 rounded">Register</button>
+        </div>
+    </header>
+    <main class="bg-linear-to-b from-blue-100 via-blue-300 via-blue-200 to-blue-100">
+        {% block content %}{% endblock %}
+    </main>
+    <footer id="contact" class="bg-white py-8">
+        <div class="w-full flex flex-col gap-8 text-center justify-center">
+            <h2 class="text-3xl font-semibold">Contact us</h2>
+            <div class="flex justify-center gap-8">
+                <img src="{{ url_for('static', filename='facebook.svg') }}" alt="Facebook" class="h-16 w-16">
+                <img src="{{ url_for('static', filename='instagram.svg') }}" alt="Instagram" class="h-16 w-16">
+                <img src="{{ url_for('static', filename='mail.svg') }}" alt="Mail" class="h-16 w-16">
+                <img src="{{ url_for('static', filename='linkedin.svg') }}" alt="LinkedIn" class="h-16 w-16">
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

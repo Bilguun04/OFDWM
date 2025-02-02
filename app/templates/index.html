@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center h-screen flex-col gap-8">
+    <div class="w-3/4 text-center">
+        <h2 id="typing-text" class="text-4xl font-semibold">Optimizing Police Deployment for Crime Management</h2>
+    </div>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded-xl" onclick="window.location.href='/upload'">Get Started</button>
+</div>
+<div class="flex flex-col gap-64 items-center" id="overview">
+    <div class="flex justify-center items-center h-screen flex-col gap-8" id="overview">
+        <h2 class="text-3xl font-semibold">Program Overview</h2>
+        <div class="w-3/4 flex flex-row gap-16 text-center">
+            <div class="inline-border border-4 border-blue-500 p-8 rounded-xl bg-white">
+                <p class="text-2xl">
+                    At OFDWM, we harness advanced technology to revolutionize crime management.
+                    Our AI-driven platform optimizes police deployment, enhancing response 
+                    times and resource allocation. We are dedicated to protecting communities and 
+                    preserving lives through innovative solutions.
+                </p>
+            </div>
+            <div class="inline-border border-4 border-blue-500 p-8 rounded-xl bg-white">
+                <p class="text-2xl">
+                    Our platform leverages advanced machine learning and real-time data processing 
+                    to provide first responders with critical insights. By optimizing police 
+                    availability, scheduling, and deployment, we enhance response times and resource 
+                    allocation. Our goal is to protect communities and reduce crime risks through 
+                    innovative technology.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-center items-center mt-32">
+        <div class="w-3/4 flex flex-col gap-4 text-center" id="about">
+            <h2 class="text-3xl font-semibold">Our team</h2>
+            <div class="flex justify-between flex-wrap gap-8">
+                <div class="flex flex-col gap-4">
+                    <p class="font-semibold">John Doe</p>
+                    <img src="{{ url_for('static', filename='bilguun_profile.jpeg') }}" alt="Bilguun Profile" class="h-48 w-48 rounded-xl">
+                </div>
+                <div class="flex flex-col gap-4">
+                    <p class="font-semibold">Alena Belova</p>
+                    <img src="{{ url_for('static', filename='alena_profile.jpeg') }}" alt="Alena Profile" class="h-48 w-48 rounded-xl">
+                </div>
+                <div class="flex flex-col gap-4">
+                    <p class="font-semibold">Bilguun Tegshbayar</p>
+                    <img src="{{ url_for('static', filename='bilguun_profile.jpeg') }}" alt="Bilguun Profile" class="h-48 w-48 rounded-xl">
+                </div>
+                <div class="flex flex-col gap-4">
+                    <p class="font-semibold">Alisa Ignatina</p>
+                    <img src="{{ url_for('static', filename='alisa_profile.jpg') }}" alt="Alisa Profile" class="h-48 w-48 rounded-xl">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-center items-center">
+        <div class="w-full mb-32 flex justify-center" id="faq">
+            <div class="w-3/4 flex flex-col gap-4 text-center">
+                <h2 class="text-3xl font-semibold">FAQ</h2>
+                <div class="flex flex-col gap-4 divide-y divide-blue-500">
+                    <div class="faq-item">
+                        <div class="flex justify-between items-center cursor-pointer">
+                            <p class="text-xl font-semibold">How does the program optimize police deployment?</p>
+                            <img src="{{ url_for('static', filename='plus.svg') }}" alt="FAQ 1" class="h-8 w-8 toggle-content">
+                        </div>
+                        <div class="faq-content hidden">
+                            <p>
+                                The system analyzes real-time crime reports and allocates <br>
+                                police units based on crime severity, availability, and <br>
+                                deployment costs. It prioritizes high-risk areas and ensures <br>
+                                efficient resource management to minimize crime and expenses.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="flex justify-between items-center cursor-pointer">
+                            <p class="text-xl font-semibold">How accurate is the program's prediction of crime hotspots?</p>
+                            <img src="{{ url_for('static', filename='plus.svg') }}" alt="FAQ 2" class="h-8 w-8 toggle-content">
+                        </div>
+                        <div class="faq-content hidden">
+                            <p>
+                                Using historical crime data and environmental factors, <br>
+                                the program applies machine learning to predict potential <br>
+                                crime hotspots. It visualizes these risks on a map and <br>
+                                provides GPS coordinates for proactive response planning.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="flex justify-between items-center cursor-pointer">
+                            <p class="text-xl font-semibold">What data does the program use?</p>
+                            <img src="{{ url_for('static', filename='plus.svg') }}" alt="FAQ 3" class="h-8 w-8 toggle-content">
+                        </div>
+                        <div class="faq-content hidden">
+                            <p>
+                                The program processes crime reports, environmental data, <br>
+                                and historical crime records. It uses real-time inputs <br>
+                                for deployment decisions and historical trends for <br>
+                                predictive modeling.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="faq-item gap-4">
+                        <div class="flex justify-between items-center cursor-pointer">
+                            <p class="text-xl font-semibold">What kind of reports does the system generate?</p>
+                            <img src="{{ url_for('static', filename='plus.svg') }}" alt="FAQ 4" class="h-8 w-8 toggle-content">
+                        </div>
+                        <div class="faq-content hidden">
+                            <p>
+                                It provides insights on addressed and missed <br>
+                                crimes, operational costs, estimated damage <br>
+                                costs, and crime severity distribution. The <br>
+                                predictive module also outputs a crime risk <br>
+                                map and a list of likely crime locations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const textElement = document.getElementById("typing-text");
+        const text = textElement.textContent;
+        const words = text.split(" ");
+        textElement.textContent = "";
+        let index = 0;
+
+        function type() {
+            if (index < words.length) {
+                textElement.textContent += words[index] + " ";
+                index++;
+                setTimeout(type, 150);
+            }
+        }
+
+        type();
+
+        const toggleContents = document.querySelectorAll('.toggle-content');
+        toggleContents.forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const faqContent = this.parentElement.nextElementSibling;
+                faqContent.classList.toggle('hidden');
+                faqContent.classList.toggle('block');
+            });
+        });
+    });
+</script>
+{% endblock %}
