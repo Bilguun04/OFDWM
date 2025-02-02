@@ -5,25 +5,25 @@
 {% block content %}
 <div class="flex justify-center items-center h-screen flex-col gap-8">
     <div class="w-3/4 text-center">
-        <h2 id="typing-text" class="text-4xl font-semibold">We optimize Firefighter Deployment for Wildlife Management</h2>
+        <h2 id="typing-text" class="text-4xl font-semibold">Optimizing Police Deployment for Crime Management</h2>
     </div>
-    <button class="bg-orange-500 text-white px-4 py-2 rounded-xl">Get Started</button>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded-xl">Get Started</button>
 </div>
 <div class="flex flex-col gap-64" id="about">
     <div class="flex justify-center items-center h-screen" id="overview">
         <div class="w-3/4 flex flex-col gap-4 text-center">
             <h2 class="text-3xl font-semibold">Program Overview</h2>
             <p>
-                At OFDWM, we harness advanced technology to revolutionize wildfire management.
-                Our AI-driven platform optimizes firefighter deployment, enhancing response 
+                At OFDWM, we harness advanced technology to revolutionize crime management.
+                Our AI-driven platform optimizes police deployment, enhancing response 
                 times and resource allocation. We are dedicated to protecting communities and 
                 preserving lives through innovative solutions.
             </p>
             <p>
                 Our platform leverages advanced machine learning and real-time data processing 
-                to provide first responders with critical insights. By optimizing firefighter 
+                to provide first responders with critical insights. By optimizing police 
                 availability, scheduling, and deployment, we enhance response times and resource 
-                allocation. Our goal is to protect communities and reduce wildfire risks through 
+                allocation. Our goal is to protect communities and reduce crime risks through 
                 innovative technology.
             </p>
         </div>
@@ -31,8 +31,62 @@
     <div class="flex justify-center items-center mt-32">
         <div class="w-3/4 flex flex-col gap-4 text-center">
             <h2 class="text-3xl font-semibold">Our team</h2>
-            <div>
-                
+            <div class="flex justify-between">
+                <div>
+                    <p>Team Member 1</p>
+                </div>
+                <div>
+                    <p>Team Member 2</p>
+                </div>
+                <div>
+                    <p>Team Member 3</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex justify-center items-center">
+        <div class="w-full md:w-1/2" id="faq">
+            <div class="w-3/4 flex flex-col gap-4 text-center">
+                <h2 class="text-3xl font-semibold">FAQ</h2>
+                <div class="flex flex-col gap-4 divide-y divide-blue-500">
+                    <div class="flex justify-between">
+                        <p>How does the program optimize police deployment?</p>
+                        <img src="{{ url_for('static', filename='plus.svg') }}" alt="FAQ 1" class="h-8 w-8">
+                        <p>
+                            The system analyzes real-time crime reports and allocates police units 
+                            based on crime severity, availability, and deployment costs. It prioritizes 
+                            high-risk areas and ensures efficient resource management to minimize crime and 
+                            expenses.
+                        </p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>How accurate is the program's prediction of crime hotspots?</p>
+                        <img src="{{ url_for('static', filename='plus.svg') }}" alt="FAQ 1" class="h-8 w-8">
+                        <p>
+                            Using historical crime data and environmental factors, the program applies machine 
+                            learning to predict potential crime hotspots. It visualizes these risks on a map 
+                            and provides GPS coordinates for proactive response planning.
+                        </p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>What data does the program use?</p>
+                        <img src="{{ url_for('static', filename='plus.svg') }}" alt="FAQ 1" class="h-8 w-8">
+                        <p>
+                            The program processes crime reports, environmental data, and historical crime 
+                            records. It uses real-time inputs for deployment decisions and historical trends 
+                            for predictive modeling.
+                        </p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p>What kind of reports does the system generate?</p>
+                        <img src="{{ url_for('static', filename='plus.svg') }}" alt="FAQ 1" class="h-8 w-8">
+                        <p>
+                            It provides insights on addressed and missed crimes, operational costs, estimated 
+                            damage costs, and crime severity distribution. The predictive module also outputs 
+                            a crime risk map and a list of likely crime locations.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
