@@ -10,12 +10,12 @@
     </div>
     <form action="/upload" method="post" enctype="multipart/form-data" class="w-3/4 flex flex-row flex-wrap items-center gap-4">
         <div class="w-full flex flex-col gap-4 inline-border border-4 border-blue-500 p-8 rounded-xl bg-white">
-            <label for="team-file" class="text-lg font-semibold">Upload Team CSV File:</label>
-            <input type="file" name="team_file" id="team-file" accept=".csv" class="border border-gray-300 p-2 rounded">
+            <label class="block mb-2 font-semibold text-lg">Upload Teams CSV:</label>
+            <input type="file" name="teams_file" accept=".csv" required class="border p-2 rounded w-full mb-4">
         </div>
         <div class="w-full flex flex-col gap-4 inline-border border-4 border-blue-500 p-8 rounded-xl bg-white">
-            <label for="incidents-file" class="text-lg font-semibold">Upload Incidents CSV File:</label>
-            <input type="file" name="incidents_file" id="incidents-file" accept=".csv" class="border border-gray-300 p-2 rounded">
+            <label class="block mb-2 font-semibold text-lg">Upload Incidents CSV:</label>
+        <input type="file" name="incidents_file" accept=".csv" required class="border p-2 rounded w-full mb-4">
         </div>
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-xl">Upload</button>
     </form>
