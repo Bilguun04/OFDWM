@@ -11,6 +11,16 @@ OFDWM is a real-time incident response platform designed to optimize police unit
 
 ---
 
+## **AI in Project Development**  
+We integrated AI tools like **ChatGPT** and **GitHub Copilot** throughout the development process. These tools assisted us in:
+- **Syntax Checks & Code Generation**: Ensuring efficient, error-free code and generating sample snippets.
+- **Testing & Debugging**: Creating test data and optimizing performance.
+- **Learning & Best Practices**: Accelerating our understanding of new technologies and improving our coding standards.
+
+By leveraging AI, we enhanced productivity, streamlined debugging, and adopted best coding practices more efficiently.
+
+---
+
 ## **Getting Started**  
 
 ### **1. Set up the virtual environment**  
