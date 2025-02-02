@@ -1,41 +1,42 @@
 import pandas as pd
 import random
 import copy
+import math
 
 
-def generate_initial_solution(teams, incidents):
-    """
-    Generate a random feasible assignment of teams to incidents.
-    Each incident is assigned to exactly one team that can handle it
-    AND still has at least 1 unit available.
+def generate_initial_schedule(teams, incidents):
+    # Sort incidents by severity (high to low)
+    incidents = incidents.sort_values(by="severity", ascending=False).reset_index(drop=True)
 
-    :param teams: list of dicts with keys ["team_name", "units_available", "power", "crime_types"]
-    :param incidents: list of dicts with keys ["incident_id", "crime_type", "severity"]
-    :return: dict {incident_id: team_name}
-    """
-    # Keep track of how many units are left for each team
-    units_left = {team["team_name"]: team["units_available"] for team in teams}
+    # Sort teams: First by variety of crime types, then by power
+    teams['crime_type_count'] = teams['crime_types'].apply(lambda x: len(x.split(';')))
+    teams = teams.sort_values(by=['crime_type_count', 'power']).reset_index(drop=True)
+    teams = teams.drop(columns=['crime_type_count'])  # Remove helper column
 
-    assignment = {}
-    for inc in incidents:
-        inc_id = inc["incident_id"]
-        crime_type = inc["crime_type"]
+    initial_schedule = pd.DataFrame(columns=["incident", "assigned_team"])
 
-        # Find teams that can handle this crime_type and still have units left
-        valid_teams = []
-        for team in teams:
-            if crime_type in team["crime_types"] and units_left[team["team_name"]] > 0:
-                valid_teams.append(team["team_name"])
+    # Assign teams to incidents
+    for i, incident in incidents.iterrows():
+        if incident['status'] == 'open':
+            for j, team in teams.iterrows():
+                if (incident['crime_type'] in team['crime_types']
+                        and team['units_available'] * team['power'] >= incident['severity']):
 
-        if not valid_teams:
-            # No valid team available -> use None (large penalty later)
-            assignment[inc_id] = None
-        else:
-            chosen = random.choice(valid_teams)
-            assignment[inc_id] = chosen
-            units_left[chosen] -= 1
+                    # Update available units
+                    teams.at[j, 'units_available'] = team['units_available'] - math.ceil(incident['severity'] / team['power'])
 
-    return assignment
+                    # Update incident status
+                    incidents.at[i, 'status'] = "in_progress"
+
+                    # Update schedule
+                    initial_schedule = pd.concat([initial_schedule, pd.DataFrame({
+                        "incident": [incident['location']],
+                        "assigned_team": [team['team_name']]})], ignore_index=True)
+                    break  # Move to the next incident after assignment
+
+    return initial_schedule
+
+
 
 
 def evaluate_solution(teams, incidents, assignment):
@@ -160,7 +161,7 @@ def monte_carlo_solution(teams, incidents, num_iterations=50, refine_iters=200):
     best_penalty = float('inf')
 
     for _ in range(num_iterations):
-        init_sol = generate_initial_solution(teams, incidents)
+        init_sol = generate_initial_schedule(teams, incidents)
         refined_sol = refine_solution(teams, incidents, init_sol, max_iterations=refine_iters)
         penalty = evaluate_solution(teams, incidents, refined_sol)
 
@@ -170,7 +171,19 @@ def monte_carlo_solution(teams, incidents, num_iterations=50, refine_iters=200):
 
     return best_assignment, best_penalty
 
+def main():
 
+    teams = pd.read_csv("teams.csv")
+    incidents = pd.read_csv("incidents.csv")
+    incidents = incidents[incidents["status"].isin(["open", "in_progress"])]
+
+    initial_schedule = generate_initial_schedule(teams, incidents)
+    print(initial_schedule)
+
+
+
+
+'''
 def main():
     # ============ 1) READ TEAMS CSV with pandas ============
     teams_df = pd.read_csv("teams.csv")
@@ -234,7 +247,7 @@ def main():
         inc_id = inc["incident_id"]
         tname = best_assign.get(inc_id, "")
         print(f"{inc_id},{tname}")
-
+'''
 
 if __name__ == "__main__":
     main()
