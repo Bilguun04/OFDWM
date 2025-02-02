@@ -3,36 +3,58 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-<div class="flex justify-center items-center h-screen">
-    <div class="w-3/4 flex flex-col gap-4 text-center">
-        <h2 class="text-4xl font-semibold">We are optimizing Firefighter Deployment for Wildlife Management</h2>
-        <button class="bg-orange-500 text-white px-4 py-2 rounded-xl">Get Started</button>
+<div class="flex justify-center items-center h-screen flex-col gap-8">
+    <div class="w-3/4 text-center">
+        <h2 id="typing-text" class="text-4xl font-semibold">We optimize Firefighter Deployment for Wildlife Management</h2>
     </div>
+    <button class="bg-orange-500 text-white px-4 py-2 rounded-xl">Get Started</button>
 </div>
-<div class="flex flex-col gap-64">
-    <div class="flex justify-center items-center h-1/2" id="about">
-        <div class="w-3/4 flex flex-col gap-4 text-center">
-            <h2 class="text-3xl font-semibold">About us</h2>
-            <p>
-                At OFDWM, we are committed to leveraging cutting-edge technology 
-                to improve wildfire response and firefighter deployment. Our mission 
-                is to develop an AI-powered system that enhances decision-making in 
-                emergency situations, ensuring that resources are allocated efficiently 
-                and lives are protected.
-            </p>
-        </div>
-    </div>
+<div class="flex flex-col gap-64" id="about">
     <div class="flex justify-center items-center h-screen" id="overview">
         <div class="w-3/4 flex flex-col gap-4 text-center">
             <h2 class="text-3xl font-semibold">Program Overview</h2>
             <p>
-                Using advanced machine learning models, real-time data processing, and an 
-                intuitive interface, we provide first responders with actionable insights 
-                to optimize firefighter availability, scheduling, and deployment. Our team 
-                is dedicated to building a solution that not only improves response times 
-                but also helps mitigate wildfire risks for communities worldwide.
+                At OFDWM, we harness advanced technology to revolutionize wildfire management.
+                Our AI-driven platform optimizes firefighter deployment, enhancing response 
+                times and resource allocation. We are dedicated to protecting communities and 
+                preserving lives through innovative solutions.
+            </p>
+            <p>
+                Our platform leverages advanced machine learning and real-time data processing 
+                to provide first responders with critical insights. By optimizing firefighter 
+                availability, scheduling, and deployment, we enhance response times and resource 
+                allocation. Our goal is to protect communities and reduce wildfire risks through 
+                innovative technology.
             </p>
         </div>
     </div>
+    <div class="flex justify-center items-center mt-32">
+        <div class="w-3/4 flex flex-col gap-4 text-center">
+            <h2 class="text-3xl font-semibold">Our team</h2>
+            <div>
+                
+            </div>
+        </div>
+    </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const textElement = document.getElementById("typing-text");
+        const text = textElement.textContent;
+        const words = text.split(" ");
+        textElement.textContent = "";
+        let index = 0;
+
+        function type() {
+            if (index < words.length) {
+                textElement.textContent += words[index] + " ";
+                index++;
+                setTimeout(type, 150);
+            }
+        }
+
+        type();
+    });
+</script>
 {% endblock %}
